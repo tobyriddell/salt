@@ -7,6 +7,7 @@ import os
 import shutil
 import tarfile
 import tempfile
+import jsonpickle
 from contextlib import closing
 
 import salt.client.ssh
@@ -202,7 +203,7 @@ def prep_trans_tar(
         salt.utils.json.dump(chunks, fp_)
     if pillar:
         with salt.utils.files.fopen(pillarfn, "w+") as fp_:
-            salt.utils.json.dump(pillar, fp_)
+            fp_.write(jsonpickle.encode(pillar))
     if roster_grains:
         with salt.utils.files.fopen(roster_grainsfn, "w+") as fp_:
             salt.utils.json.dump(roster_grains, fp_)
